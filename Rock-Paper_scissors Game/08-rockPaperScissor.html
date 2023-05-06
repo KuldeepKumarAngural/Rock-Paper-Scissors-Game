@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="images/scissor.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rock paper scissor Game</title>
+    <style>
+        p {
+            font-size: 40px;
+            font-weight: 700;
+        }
+        .btn{
+            height: 50px;
+            width: 350px;
+            border: none;
+            background-color: rgb(230, 107, 63);
+            letter-spacing: 2.5px;
+            color: black;
+            font-size: 20px;
+            margin-top: 20px;
+            align-items: center;
+            margin-left: 350px;
+             cursor: pointer;
+            transition-duration: 0.3s;
+        }
+        .btn:hover{
+            box-shadow: 0 12px 16px 0 rgba(22, 17, 17, 0.787), 0 17px 50px 0 rgba(0, 0, 0, 0.655);
+
+        }
+
+        .container {
+            display: inline-flex;
+            justify-content: center;
+            gap: 50px;
+            margin-left: 180px;
+
+        }
+        body{
+            background-color: #777d87;
+        }
+
+        .btn1 {
+            background-image: url(images/rock.png);
+            height: 200px;
+            width: 200px;
+            background-size: cover;
+            cursor: pointer;
+            transition-duration: 0.3s;
+        }
+
+        .btn1:hover {
+            box-shadow: 0 12px 16px 0 rgba(22, 17, 17, 0.787), 0 17px 50px 0 rgba(0, 0, 0, 0.655);
+
+        }
+
+        .btn2 {
+            background-image: url(images/paper.jpg);
+            height: 200px;
+            width: 200px;
+            background-size: cover;
+            cursor: pointer;
+            transition-duration: 0.3s;
+        }
+
+        .btn2:hover {
+            box-shadow: 0 12px 16px 0 rgba(22, 17, 17, 0.787), 0 17px 50px 0 rgba(0, 0, 0, 0.655);
+
+        }
+
+        .btn3 {
+            background-image: url(images/scissor.png);
+            height: 200px;
+            width: 200px;
+            background-size: cover;
+            cursor: pointer;
+            transition-duration: 0.3s;
+        }
+
+        .btn3:hover {
+            box-shadow: 0 12px 16px 0 rgba(22, 17, 17, 0.787), 0 17px 50px 0 rgba(0, 0, 0, 0.655);
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <p style="text-align: center;">Rock Paper Scissors Game </p>
+
+    <div class="container"> 
+        <button class="btn1" onclick="playGame('rock')"></button>
+        <button class="btn2" onclick="playGame('paper');"></button>
+        <button class="btn3" onclick="playGame('scissor');"></button>
+        
+    </div>
+    <button class="btn" onclick="score.wins=0; score.loses=0; score.ties=0; localStorage.removeItem('score');">Reset Game Data</button>
+    <script>
+        let score=JSON.parse(localStorage.getItem('score')); 
+
+        if(!score){
+            score={
+                wins:0,
+                loses:0,
+                ties:0
+            }; 
+
+        }
+        console.log();
+
+        function playGame(playerMove) {
+            const computerMove = pickComputerMove();
+            // console.log(`this is Computer's Move :${computerMove}`);
+            let result = '';
+            if (playerMove === 'scissor') {
+                if (computerMove === 'rock') {
+                    result = 'You Lose';
+                }
+                else if (computerMove === 'paper') {
+                    result = 'You Win';
+                }
+                else if (computerMove === 'scissor') {
+                    result = 'Tie';
+                }
+            }
+            else if (playerMove == 'paper') {
+                if (computerMove === 'rock') {
+                    result = 'You Win';
+                }
+                else if (computerMove === 'paper') {
+                    result = 'Tie';
+                }
+                else if (computerMove === 'scissor') {
+                    result = 'You Lose';
+                }
+            }
+            else if (playerMove === 'rock') {
+                if (computerMove === 'rock') {
+                    result = 'Tie';
+                }
+                else if (computerMove === 'paper') {
+                    result = 'You Lose';
+                }
+                else if (computerMove === 'scissor') {
+                    result = 'You Win';
+                }
+            }
+
+                if(result==='You Win'){
+                    score.wins+=1;
+
+                }
+                else if(result==='You Lose'){
+                    score.loses+=1;
+                }
+                else if(result==='Tie'){
+
+                    score.ties+=1;
+                }
+
+                localStorage.setItem('score' , 
+                JSON.stringify(score));
+
+
+
+
+            alert(`You picked ${playerMove} . and Computer picked ${computerMove}. ${result} 
+            wins:${score.wins} loses:${score.loses} ties:${score.ties}`);
+
+        }
+
+        function pickComputerMove() {
+            let computerMove = '';
+            const randomNumber = Math.random();
+
+            if (randomNumber >= 0 && randomNumber < 1 / 3) {
+
+                computerMove = 'rock';
+            }
+            else if (randomNumber >= 1 / 3 && randomNumber < 2 / 3) {
+                computerMove = 'paper';
+            }
+            else if (randomNumber >= 2 / 3 && randomNumber < 1) {
+                computerMove = 'scissor';
+            }
+            return computerMove;
+        }
+
+    </script>
+</body>
+
+</html>
